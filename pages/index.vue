@@ -85,7 +85,6 @@ export default {
   },
   mounted() {
       if(this.$route.query.search){
-        console.log(this.$route)
        this.searchKey = this.$route.query.search
        this.searchPhotos()
      }
