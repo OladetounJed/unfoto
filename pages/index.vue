@@ -84,7 +84,14 @@ export default {
     };
   },
   mounted() {
-    this.getFeaturedPhotos();
+      if(this.$route.query.search){
+        console.log(this.$route)
+       this.searchKey = this.$route.query.search
+       this.searchPhotos()
+     }
+     else {
+       this.getFeaturedPhotos();
+     }
   },
   watch:{
     $route(){
@@ -93,6 +100,7 @@ export default {
        this.searchKey = ""
        this.getFeaturedPhotos()
      }
+    
     }
 
   },
