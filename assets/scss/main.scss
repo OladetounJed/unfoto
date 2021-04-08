@@ -249,8 +249,8 @@ Desktop Stylesheet
     overflow: hidden;
   }
   &__close {
-    background-color: rgb(61, 61, 61);
-    border-radius: 50%;
+    // background-color: rgb(61, 61, 61);
+    // border-radius: 50%;
     padding: 0 0.4em;
     position: absolute;
     top: 10px;
@@ -261,7 +261,7 @@ Desktop Stylesheet
     color: $primary-grey;
 
     &:hover {
-      transform: scale(1.1);
+      transform: rotate(20deg);
     }
   }
 
@@ -301,6 +301,8 @@ Desktop Stylesheet
       border-radius: 0;
     }
     &__close {
+        background-color: rgb(61, 61, 61);
+    border-radius: 50%;
       font-size: 2em;
       border-radius: 50%;
     }

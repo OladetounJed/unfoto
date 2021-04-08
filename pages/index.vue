@@ -2,7 +2,15 @@
   <div class="home">
     <section class="header">
       <div class="header__form-con">
-        <h1 v-if="ifSearching">{{ (isSearching) ? 'Searching For ' : (photos.length >= 1) ? 'Result for ' : 'No Result For ' }}<span>"{{searchKey}}"</span></h1>
+        <h1 v-if="ifSearching">
+          {{
+            isSearching
+              ? "Searching For "
+              : photos.length >= 1
+              ? "Result for "
+              : "No Result For "
+          }}<span>"{{ searchKey }}"</span>
+        </h1>
         <form v-else class="header__form" @submit.prevent="searchPhotos">
           <span class="header__icon"><i class="fa fa-search"></i></span>
           <input
@@ -30,7 +38,7 @@
           </div>
         </div>
       </div>
-      <div class="images">
+      <div class="images" v-else>
         <div
           class="images__item"
           v-for="photo in photos"
@@ -50,24 +58,11 @@
         </div>
       </div>
     </section>
-    <section class="modal-section">
-      <div class="modal" v-if="showModal">
-        <p class="modal__close" @click="showModal = false">
-          &times;
-        </p>
-        <div class="modal__body">
-          <img class="modal__image" :src="selectedPhoto.urls.regular" />
-          <div class="modal__info">
-            <h3 class="modal__heading">
-              {{ selectedPhoto.user.name }}
-            </h3>
-            <p class="modal__paragraph">
-              {{ selectedPhoto.user.location }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <ImagePopup
+      v-if="showModal"
+      :image="selectedPhoto"
+      @closeModal="showModal = false"
+    />
   </div>
 </template>
 
@@ -79,35 +74,33 @@ export default {
       photosLoading: true,
       showModal: false,
       searchKey: "",
-      ifSearching : false,
-      isSearching: true
+      ifSearching: false,
+      isSearching: true,
+      selectedPhoto: ""
     };
   },
   mounted() {
-      if(this.$route.query.search){
-       this.searchKey = this.$route.query.search
-       this.searchPhotos()
-     }
-     else {
-       this.getFeaturedPhotos();
-     }
-  },
-  watch:{
-    $route(){
-     if(!this.$route.query.search){
-       this.ifSearching = false
-       this.searchKey = ""
-       this.getFeaturedPhotos()
-     }
-    
+    if (this.$route.query.search) {
+      this.searchKey = this.$route.query.search;
+      this.searchPhotos();
+    } else {
+      this.getFeaturedPhotos();
     }
-
+  },
+  watch: {
+    $route() {
+      if (!this.$route.query.search) {
+        this.ifSearching = false;
+        this.searchKey = "";
+        this.getFeaturedPhotos();
+      }
+    }
   },
   methods: {
     getFeaturedPhotos() {
       this.photosLoading = true;
       this.$store
-        .dispatch("getFeaturedPhotos", "africa")
+        .dispatch("getPhotos", "africa")
         .then(response => {
           this.photosLoading = false;
           this.photos = response.results;
@@ -115,24 +108,28 @@ export default {
         .catch(error => {});
     },
     zoomPhoto(showModal, itemKey) {
-      this.showModal = showModal;
       this.selectedPhoto = this.photos.find(function(element) {
         return element.id === itemKey;
       });
+      this.showModal = showModal;
     },
+
     searchPhotos() {
       this.$router.push({ path: "/", query: { search: this.searchKey } });
-      this.isSearching = true
+      this.isSearching = true;
       this.photosLoading = true;
-      this.ifSearching = true
+      this.ifSearching = true;
       this.$store
-        .dispatch("getSearchedPhotos", this.searchKey)
+        .dispatch("getPhotos", this.searchKey)
         .then(response => {
-          this.isSearching = false
+          this.isSearching = false;
           this.photosLoading = false;
           this.photos = response.results;
         })
-        .catch(error => {});
+        .catch(error => {
+          this.isSearching = false;
+          this.photosLoading = false;
+        });
     }
   }
 };
