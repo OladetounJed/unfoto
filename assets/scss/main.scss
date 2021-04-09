@@ -66,9 +66,14 @@ Desktop Stylesheet
     display: block;
     margin: 0 auto;
     padding-top: 10em;
+    color: #263958;
+    font-weight: 800;
+    h1 {
+      font-size: 2.2em;
+    }
 
     span {
-      color: black;
+      color: #6c7a91;
     }
   }
 
@@ -95,9 +100,10 @@ Desktop Stylesheet
 
 .container {
   width: 80%;
-  margin: -6em auto;
+  margin: -6em auto 6em auto;
 }
-.images, .placeholder-con {
+.images,
+.placeholder-con {
   max-width: 980px;
   margin: -7em auto 0;
   grid-row-gap: 30px;
@@ -157,18 +163,12 @@ Desktop Stylesheet
     &:hover {
       transform: scale(1.03);
     }
-
-    &-name {
-      position: absolute;
-      bottom: 2.5em;
-      left: 1em;
-      z-index: 1;
-    }
-    &-location {
+    &-info {
       position: absolute;
       bottom: 1em;
       left: 1em;
       z-index: 1;
+
     }
 
     &:after {
@@ -226,17 +226,18 @@ Desktop Stylesheet
 //Modal Styles
 
 .modal {
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 99;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.7);
+  
 
   &__body {
     max-width: 900px;
@@ -267,14 +268,32 @@ Desktop Stylesheet
 
   &__image {
     object-fit: cover;
-    height: 83%;
+    height: 80%;
     width: 100%;
   }
 
   &__info {
     color: #2a3d5b;
-    padding: 2em 1em;
+    padding: 1em 2em;
+
+    h3 {
+      margin: 0.5em 0;
+      font-size: 1.3em;
+      font-weight: 700;
+    }
   }
+}
+
+/* Large devices (laptops/desktops, 1120px and down) */
+@media only screen and (max-width: 1120px) {
+
+  .modal {
+    &__image {
+      height: 85%;
+    }
+    
+  }
+
 }
 
 //Mobile Styles
@@ -301,10 +320,28 @@ Desktop Stylesheet
       border-radius: 0;
     }
     &__close {
-        background-color: rgb(61, 61, 61);
-    border-radius: 50%;
+      background-color: rgb(61, 61, 61);
+      border-radius: 50%;
       font-size: 2em;
       border-radius: 50%;
+    }
+  }
+}
+
+
+/* Extra small devices Landscpe (phones, 600px and down) */
+@media only screen and (min-device-width: 480px) and (max-device-width: 999px) and (orientation: landscape) {
+
+  .modal {
+      padding: 0;
+
+      &__body {
+        border-radius: 0;
+      }
+    &__image {
+      object-fit: cover;
+      height: 70%;
+      
     }
   }
 }

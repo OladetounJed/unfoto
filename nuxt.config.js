@@ -77,7 +77,7 @@ export default {
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,600;1,700&display=swap"
+          "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
       },
       {
         rel: "stylesheet",

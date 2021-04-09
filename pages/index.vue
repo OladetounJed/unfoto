@@ -51,18 +51,25 @@
             class="images__item-image"
           />
 
+          <div class="images__item-info">
+            
           <h3 class="images__item-name">
             {{ photo.user.name }}
           </h3>
           <p class="images__item-location">{{ photo.user.location }}</p>
+
+          </div>
+
         </div>
       </div>
     </section>
-    <ImagePopup
+       <ImagePopup
       v-if="showModal"
       :image="selectedPhoto"
       @closeModal="showModal = false"
     />
+ 
+   
   </div>
 </template>
 
